@@ -1,0 +1,21 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #103cbe, #ececec);
+}
+/*--------Login Controller----------*/
+
+.box-area {
+    width: 930px
+}
+
+/*--------Right Box----------*/
+
+.right-box {
+    padding: 40px 30px 40px 40px;
+}
+
+/*--------Login----------*/
+
+::placeholder {
+    font-size: 16px;
+}
