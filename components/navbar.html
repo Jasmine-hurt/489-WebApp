@@ -28,9 +28,39 @@
         </li>
       </ul>
       <form class="d-flex" role="search">
+        <div class="btn-group">
+          <button class="btn btn-outline-primary dropdown-toggle me-2" type="button" id="plusButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="fw-bold fs-4">+</span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="plusButton">
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#folderModal">Folder</a></li>
+            <li><a class="dropdown-item" href="#">Deck</a></li>
+            <li><a class="dropdown-item" href="#">Study Guide</a></li>
+          </ul>
+        </div>
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
   </div>
 </nav>
+
+<div class="modal fade" id="folderModal" tabindex="-1" aria-labelledby="folderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="folderModalLabel">New Folder</h5>
+        <!-- Close button (X) -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="newFolderForm">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="folderName" placeholder="Enter folder name" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Folder</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
