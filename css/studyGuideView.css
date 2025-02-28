@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#title {
+    padding-top: 30px;
+    padding-left: 40px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+#header-button {
+    font-size:15px;
+    font-weight: bold; 
+    color: white;
+    background-color: #007bff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 50px;
+    margin-top:28px;
+}
+
+#header-button:hover {
+    background-color: #0056b3; 
+    transition: background-color 0.3s ease; 
+}
+
+@media (max-width: 768px) {
+    #title {
+        font-size: 2rem;
+    }
+    
+    #header-button {
+        font-size: 0.9rem; 
+        padding: 6px 14px;
+    }
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 0px;
+}
+
+/* Styling for Study Title */
+#study-title {
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.study-outline-box {
+    width: 60%;
+    font-size: 1rem;
+    min-height: 100px;
+}
+
+#triple-dot-button {
+    font-size:15px;
+    font-weight: bold; 
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-popup {
+    text-align: center;
+    display: none;
+    max-width: 370px;
+    border-radius: 9px;
+    position: fixed;
+    left: 45%;
+    top: 100px;
+}
+
+#cancel-delete-popup {
+    font-size:15px;
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.create-new-study {
+    display: flex;
+    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#bottom-title {
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+#upload-button {
+    font-size:15px;
+    font-weight: bold; 
+    color: white;
+    background-color: #007bff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
