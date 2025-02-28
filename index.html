@@ -39,59 +39,7 @@
 
 
 
-    <script>
-      const recentDecks = [
-        { name: "Recent Deck 1", link: "/deck/1" },
-        { name: "Recent Deck 2", link: "/deck/2" },
-        { name: "Recent Deck 3", link: "/deck/3" }
-      ];
-  
-      const deckContainer = document.getElementById('recent-decks-container');
-  
-      if (recentDecks.length) {
-        recentDecks.forEach(deck => {
-          const deckHtml = `
-            <div class="col-sm-3">
-              <a href="${deck.link}">
-                <div class="card shadow rounded-3 border-0">
-                  <div class="card-body text-center">
-                    <h5 class="card-title">${deck.name}</h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-          `;
-          deckContainer.innerHTML += deckHtml;
-        });
-      }
-    </script>
-
-    <script>
-      const recentGuides = [
-        { name: "Recent Guide 1", link: "/deck/1" },
-        { name: "Recent Guide 2", link: "/deck/2" },
-        { name: "Recent Guide 3", link: "/deck/3" }
-      ];
-  
-      const guideContainer = document.getElementById('recent-guides-container');
-  
-      if (recentGuides.length) {
-        recentGuides.forEach(guide => {
-          const guideHtml = `
-            <div class="col-sm-3">
-              <a href="${guide.link}">
-                <div class="card shadow rounded-3 border-0">
-                  <div class="card-body text-center">
-                    <h5 class="card-title">${guide.name}</h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-          `;
-          guideContainer.innerHTML += guideHtml;
-        });
-      }
-    </script>
+    
 
     <script>
       fetch('components/navbar.html')
@@ -100,6 +48,8 @@
           document.getElementById('navbar-placeholder').innerHTML = data;
         });
     </script>
+
+    <script src="js/displayRecentDecksNGuides.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
