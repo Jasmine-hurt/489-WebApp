@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#title {
+    padding-top: 30px;
+    padding-left: 40px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+#flashcard {
+    min-height: 700px;
+    margin: 0 auto;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 2rem;
+}
+#definition-text span.blank {
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 2px dashed gray;
+    margin: 0 4px;
+    padding: 2px;
+}
+#definition-text span.blank-word.correct {
+  color: green;
+  font-weight: bold;
+}
+
+#definition-text span.blank-word.incorrect {
+  color: red;
+  font-weight: bold;
+}
+.word-bank-option {
+    border: 1px solid darkgray;
+    padding: 6px 12px;
+    background-color: white;
+    cursor: grab;
+    border-radius: 6px;
+}
+.word-bank-option.dragging {
+opacity: 0.3;
+}
+.definition-wrapper {
+    min-height: 500px;
+}
+#alert-message-missing-words {
+    max-width: 600px;
+    position: absolute;
+    left: 1100px;
+    top: 120px;
+}
