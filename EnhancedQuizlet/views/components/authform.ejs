@@ -1,0 +1,48 @@
+<div class="row align-items-center">
+    <div class="header-text mb-4">
+        <p id="auth-header"><%= headerText %></p>
+        <p id="auth-subtext"><%= subText %></p>
+    </div>
+  
+    <% if (showNameField) { %>
+    <div id="name-field" class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Full name" name="name">
+    </div>
+    <% } %>
+  
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Email address" name="email">
+    </div>
+    <div class="input-group mb-3">
+        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="password">
+    </div>
+  
+    <% if (showConfirmPassword) { %>
+    <div id="confirm-password-field" class="input-group mb-3">
+        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Confirm password" name="confirmPassword">
+    </div>
+    <% } %>
+  
+    <div id="remember-me-section" class="input-group mb-5 d-flex justify-content-between">
+        <% if (showRemember) { %>
+        <div id="square-check" class="form-check">
+            <input type="checkbox" class="form-check-input" id="formCheck" name="remember">
+            <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
+        </div>
+        <% } %>
+  
+        <% if (showForgotten) { %>
+        <div id="forgotten" class="forgot">
+            <small><a href="#">Forgot Password</a></small>
+        </div>
+        <% } %>
+    </div>
+  
+    <div class="input-group mb-3">
+        <button type="submit" class="btn btn-lg btn-primary w-100 fs-6"><%= buttonText %></button>
+    </div>
+  
+    <div class="row">
+        <small id="auth-toggle-text"><%- toggleText %></small>
+    </div>
+</div>  
