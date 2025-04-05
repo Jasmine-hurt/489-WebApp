@@ -7,11 +7,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', (req, res) => {
-  res.render('index');
+  res.render('login');
 });
 
 router.post('/login', (req, res) => {
-  res.redirect('/');
+  console.log(req.body.username+" - " + req.body.password)
+  res.redirect("/home")
 });
 
 // renders views/signup.ejs
