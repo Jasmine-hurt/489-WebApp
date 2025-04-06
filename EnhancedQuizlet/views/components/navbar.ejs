@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Enhanced Quizlet</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="library.html">Library</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="games.html">Games</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Settings
+            </a>
+            <ul class="dropdown-menu">
+              <% if (!session.user) { %>
+                <li><a class="dropdown-item" href="/auth/login">Login</a></li>
+              <% } else { %>
+                <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+              <% } %>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <div class="btn-group">
+            <button class="btn btn-outline-primary dropdown-toggle me-2" type="button" id="plusButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="fw-bold fs-4">+</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="plusButton">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#folderModal">Folder</a></li>
+              <li><a class="dropdown-item" href="deckCreation.html">Deck</a></li>
+              <li><a class="dropdown-item" href="studyGuideCreation.html">Study Guide</a></li>
+            </ul>
+          </div>
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="modal fade" id="folderModal" tabindex="-1" aria-labelledby="folderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="folderModalLabel">New Folder</h5>
+          <!-- Close button (X) -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="newFolderForm">
+            <div class="mb-3">
+              <input type="text" class="form-control" id="folderName" placeholder="Enter folder name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Folder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
