@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
   res.redirect('/auth/login');
 });
 
-router.get('/home', function(requ, res) {
+router.get('/home', function(req, res) {
   res.render('home');
 });
 

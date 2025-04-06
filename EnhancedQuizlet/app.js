@@ -3,11 +3,30 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const sequelize = require('./db')
+require('./models/User');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 
 var app = express();
+
+const session = require('express-session');
+const flash = require('connect-flash');
+
+app.use(session({
+  secret: 'secret_session_key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success');
+  res.locals.error_msg = req.flash('error');
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,5 +56,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// force clears the database upon starting, remove it if needed
+sequelize.sync({ force: true}).then(()=> {
+  console.log("Sequelize Sync Completed...")
+})
 
 module.exports = app;
