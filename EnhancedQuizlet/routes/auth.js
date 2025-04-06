@@ -34,9 +34,15 @@ router.post('/login', async (req, res) => {
       return res.redirect('/auth/login');
     }
 
+    req.session.user = {
+      id: user.userID,
+      name: user.name,
+      email: user.email
+    };
+
     req.flash('success', 'Login successful!');
     res.redirect('/home');
-    
+
   } catch (error) {
     console.error(error);
     req.flash('error', 'Internal server error.');
@@ -84,6 +90,17 @@ router.post('/signup', async (req, res) => {
     req.flash('error', "Something went wrong while signing up.");
     res.redirect('/auth/signup');
   }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error(err);
+      req.flash('error', 'Failed to log out.');
+      return res.redirect('/home');
+    }
+    res.redirect('/auth/login');
+  });
 });
 
 module.exports = router;

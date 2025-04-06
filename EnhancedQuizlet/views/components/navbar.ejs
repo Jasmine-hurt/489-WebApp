@@ -20,8 +20,11 @@
               Settings
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="login.html">Login</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <% if (!session.user) { %>
+                <li><a class="dropdown-item" href="/auth/login">Login</a></li>
+              <% } else { %>
+                <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+              <% } %>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
