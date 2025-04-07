@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { sequelize } = require('./db');
+const { sequelize, Flashcard } = require('./db');
 require('./models/User');
 require('./models/Deck');
 require('./models/Flashcard');
@@ -68,8 +68,7 @@ app.use(function(err, req, res, next) {
 // force clears the database upon starting, remove it if needed
 sequelize.sync(/*{ force: true }*/).then(async ()=> {
   console.log("Sequelize Sync Completed...")
-  
-  //const { User, Deck } = require('./db');
+  //const { User, Deck, Flashcard } = require('./db');
 });
 
 module.exports = app;

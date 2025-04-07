@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
 router.get('/:deckID', async (req, res) => {
 
     try {
+        const userID = req.session.user?.id;
         const deck = await Deck.findByPk(req.params.deckID, {
             include: [Flashcard]
         });
@@ -36,7 +37,11 @@ router.get('/:deckID', async (req, res) => {
             return res.status(404).send('Deck not found');
         }
 
-        res.render('deckFlashcardsView', { deck });
+        if (deck.userID === userID) {
+            res.render('deckFlashcardsView', { flashcards: deck.Flashcards });
+        } else {
+            return res.status(404).send('Not authorized to view this deck');
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Failed to load deck.");
