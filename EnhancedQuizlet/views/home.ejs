@@ -13,34 +13,35 @@
 	<%- include('components/navbar') %>
 
 	<!-- Flashcard Decks -->
-	<div class="row px-3 my-3" id="recent-decks-container">
-		<div class="col-sm-3">
-			<a href="/allDecksView.html">
-				<div class="card shadow rounded-3 border-0">
-					<div class="card-body text-center">
-						<h5 class="card-title">
-							<i class="bi bi-files mx-2"></i>View All Flashcard Decks
-						</h5>
+	<div class="container my-4">
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-md-6 mb-3">
+				<a href="/decks">
+					<div class="card shadow rounded-3 border-0">
+						<div class="card-body text-center">
+							<h5 class="card-title">
+								<i class="bi bi-files mx-2"></i>View All Flashcard Decks
+							</h5>
+						</div>
 					</div>
-				</div>
-			</a>
+				</a>
+			</div>
+
+			<!-- Study Guides -->
+			<div class="col-lg-4 col-md-6 mb-3">
+				<a href="/">
+					<div class="card shadow rounded-3 border-0">
+						<div class="card-body text-center">
+							<h5 class="card-title">
+								<i class="bi bi-files mx-2"></i>View All Study Guides
+							</h5>
+						</div>
+					</div>
+				</a>
+			</div>
 		</div>
 	</div>
 
-	<!-- Study Guides -->
-	<div class="row px-3 my-3" id="recent-guides-container">
-		<div class="col-sm-3">
-			<a href="/allGuidesView.html">
-				<div class="card shadow rounded-3 border-0">
-					<div class="card-body text-center">
-						<h5 class="card-title">
-							<i class="bi bi-files mx-2"></i>View All Study Guides
-						</h5>
-					</div>
-				</div>
-			</a>
-		</div>
-	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

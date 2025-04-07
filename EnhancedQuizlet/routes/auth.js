@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/User')
+const { User } = require('../db')
 
 // https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcrypt');
