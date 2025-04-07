@@ -66,8 +66,10 @@ app.use(function(err, req, res, next) {
 });
 
 // force clears the database upon starting, remove it if needed
-sequelize.sync(/*{ force: true }*/).then(()=> {
+sequelize.sync(/*{ force: true }*/).then(async ()=> {
   console.log("Sequelize Sync Completed...")
-})
+  
+  //const { User, Deck } = require('./db');
+});
 
 module.exports = app;
