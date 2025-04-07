@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const { Deck } = require('../db');
+const { Deck, Flashcard } = require('../db');
 
+// view all decks
 router.get('/', async (req, res) => {
     const userID = req.session.user?.id;
 
@@ -20,6 +21,25 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Failed to load decks.");
+    }
+});
+
+// view a single deck with its flashcards
+router.get('/:deckID', async (req, res) => {
+
+    try {
+        const deck = await Deck.findByPk(req.params.deckID, {
+            include: [Flashcard]
+        });
+
+        if (!deck) {
+            return res.status(404).send('Deck not found');
+        }
+
+        res.render('deckFlashcardsView', { deck });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to load deck.");
     }
 });
 

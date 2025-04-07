@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your Deck - Enhanced Quizlet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+      .flashcard {
+        perspective: 1000px; /*3D effect, how far away you are viewing it from*/
+        height: 200px;
+      }
+
+      .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s; /*Controls speed of card flip*/
+        transform-style: preserve-3d; /*Allows card to have 3d children(front and back)*/
+      }
+
+      .flashcard:hover .flashcard-inner {
+        transform: rotateX(180deg);
+      }
+
+      .flashcard-front, .flashcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden; /*Prevents the back of the card from being visible*/
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1rem;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+
+      .flashcard-front {
+        background-color: #f8f9fa;
+        font-weight: bold;
+      }
+
+      .flashcard-back {
+        background-color: #e9ecef;
+        transform: rotateX(180deg); /*The back of the card starts rotated 180 so front and back are on opposite sides*/
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <%- include('components/navbar') %>
+
+    <div class="container my-5">
+      <h2 class="text-center mb-4">Deck View</h2>
+      <div class="row" id="deck-container">
+        <% if (flashcards.length) { %>
+            <% flashcards.forEach((card, index) => { %>
+                <div class="col-md-4 md-4">
+                    <div class="flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">${card.front}</div>
+                            <div class="flashcard-back">${card.back}</div>
+                        </div>
+                    </div>
+                </div>
+              <% }) %>
+        <% } else { %>
+            <p>No decks found.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
