@@ -42,7 +42,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -68,6 +68,7 @@ app.use(function(err, req, res, next) {
 // force clears the database upon starting, remove it if needed
 sequelize.sync(/*{ force: true }*/).then(async ()=> {
   console.log("Sequelize Sync Completed...")
+  
   //const { User, Deck, Flashcard } = require('./db');
 });
 
