@@ -35,6 +35,11 @@
         </div>
         
         <div id="box-container" class="mt-4">
+            <script>
+                window.onload = () => {
+                  createBox(); // Adds one flashcard by default
+                };
+              </script>
             <% flashcards.forEach((flashcard, index) => { %>
                 <div class="mb-3 p-3 border rounded">
                     <div class="row g-2">
@@ -63,46 +68,39 @@
         let cardIndex = 0;
 
         function createBox() {
-            // Create a new div element for the box
             const newBox = document.createElement("div");
             newBox.classList.add("box");
 
-            // Create a container for the inputs
             const inputContainer = document.createElement("div");
             inputContainer.classList.add("box-inputs");
 
-            // Create two input fields
             const input1 = document.createElement("input");
             input1.type = "text";
+            input1.name = "terms[]"; 
             input1.placeholder = "Enter term";
+            input1.classList.add("form-control", "mb-2");
 
             const input2 = document.createElement("input");
             input2.type = "text";
+            input2.name = "descriptions[]";
             input2.placeholder = "Enter definition";
+            input2.classList.add("form-control", "mb-2");
 
-            // Append the inputs to the container
             inputContainer.appendChild(input1);
             inputContainer.appendChild(input2);
 
-            // Create a delete button
             const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
             deleteButton.textContent = "Delete";
-            deleteButton.classList.add("btn", "btn-gray", "ms-2"); // Apply custom gray button class
+            deleteButton.classList.add("btn", "btn-secondary", "ms-2", "mt-2");
 
-            // Add the delete functionality
-            deleteButton.onclick = function() {
-                newBox.remove(); // Remove the box when the delete button is clicked
-            };
+            deleteButton.onclick = () => newBox.remove();
 
-            // Append the input container and delete button to the new box
             newBox.appendChild(inputContainer);
             newBox.appendChild(deleteButton);
 
-            // Get the container to append the new box
-            const boxContainer = document.getElementById("box-container");
-
-            // Insert the new box at the top of the container
-            boxContainer.insertBefore(newBox, boxContainer.firstChild);
+            document.getElementById("box-container").appendChild(newBox);
+            cardIndex++;
         }
     </script>
 
