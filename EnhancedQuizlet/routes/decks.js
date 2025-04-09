@@ -76,7 +76,6 @@ router.post('/create', async (req, res) => {
 
 // view a single deck with its flashcards
 router.get('/:deckID', async (req, res) => {
-
     try {
         const userID = req.session.user?.id;
         const deck = await Deck.findByPk(req.params.deckID, {
@@ -87,8 +86,8 @@ router.get('/:deckID', async (req, res) => {
             return res.status(404).send('Deck not found');
         }
 
-        if (deck.userID === userID) {
-            res.render('deckFlashcardsView', { flashcards: deck.Flashcards });
+        if (deck.userID == userID) {
+            res.render('deckFlashcardsView', { deckID: deck.deckID, flashcards: deck.Flashcards });
         } else {
             return res.status(404).send('Not authorized to view this deck');
         }
