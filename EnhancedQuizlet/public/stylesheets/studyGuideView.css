@@ -5,8 +5,7 @@ body {
 }
 
 #title {
-    padding-top: 30px;
-    padding-left: 40px;
+    padding-top: 100px;
     font-family:Arial, Helvetica, sans-serif;
 }
 
@@ -53,7 +52,7 @@ body {
 }
 
 .study-outline-box {
-    width: 60%;
+    width: 100%;
     font-size: 1rem;
     min-height: 100px;
 }
