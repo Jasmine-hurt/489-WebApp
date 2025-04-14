@@ -14,6 +14,7 @@ const decksRouter = require('./routes/decks');
 const flashcardsRouter = require('./routes/flashcards');
 const gamesRouter = require('./routes/games');
 const adminRouter = require('./routes/admin');
+const studyGuideRouter = require('./routes/studyGuides');
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 app.use('/decks', decksRouter);
 app.use('/flashcards', flashcardsRouter);
 app.use('/admin', adminRouter);
+app.use('/studyGuides', studyGuideRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
