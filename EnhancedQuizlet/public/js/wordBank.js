@@ -1,7 +1,6 @@
 const flashcards = window.flashcards || [];
 
 let currentIndex = 0;
-
 let term = "";
 let fullDefinition = "";
 let missingWords = [];
@@ -19,32 +18,103 @@ function loadFlashcard() {
 	// Grab term/definition from flashcards
 	const currentFlashcard = flashcards[currentIndex];
 
+    // array is empty, exit
 	if (!currentFlashcard) return;
 
+    // storing the term and def.
 	term = currentFlashcard.term;
 	fullDefinition = currentFlashcard.description;
 
+    // split the full definition into individual words and separate punctuation
     const allWords = fullDefinition.split(" ");
+    const punctuationRegex = /^(.+?)([.,!?]+)?$/;
 
-    // random between 1 and 5
-    const interval = Math.floor(Math.random() * 4) + 2
+    // randomly choose 1-5 unique word positions to blank
+    const blankCount = Math.min(Math.floor(Math.random() * 5) + 1, allWords.length);
+    const blankIndices = new Set();
+    while (blankIndices.size < blankCount) {
+        const index = Math.floor(Math.random() * allWords.length);
+        blankIndices.add(index);
+    }
 
-    //missingWords = allWords.filter((_, i) => i % interval === 0);
-    missingWords = allWords.filter((_, i) => i % interval === 0).map(word => {
-        const match = word.match(/^(.+?)([.,!?]+)?$/);
-        return match ? match[1] : word;
+    // extract lowercase words without punctuation and add to selectedWords
+    const selectedWords = new Set();
+    [...blankIndices].forEach(i => {
+        const word = allWords[i];
+        const match = word.match(punctuationRegex);
+        const clean = (match ? match[1] : word).toLowerCase();
+        selectedWords.add(clean);
     });
 
+    // mark all occurrences of selected words as blanks
+    missingWords = [];
+    allWords.forEach(word => {
+        const match = word.match(punctuationRegex);
+        const clean = (match ? match[1] : word).toLowerCase();
+        if (selectedWords.has(clean)) {
+            missingWords.push(clean);
+        }
+    });
+
+function loadFlashcard() {
+	// Grab term/definition from flashcards
+	const currentFlashcard = flashcards[currentIndex];
+
+    // array is empty, exit
+	if (!currentFlashcard) return;
+
+    // storing the term and def.
+	term = currentFlashcard.term;
+	fullDefinition = currentFlashcard.description;
+
+    // split the full definition into individual words and separate punctuation
+    const allWords = fullDefinition.split(" ");
+    const punctuationRegex = /^(.+?)([.,!?]+)?$/;
+
+    // randomly choose 1-5 unique word positions to blank
+    const blankCount = Math.min(Math.floor(Math.random() * 5) + 1, allWords.length);
+    const blankIndices = new Set();
+    while (blankIndices.size < blankCount) {
+        const index = Math.floor(Math.random() * allWords.length);
+        blankIndices.add(index);
+    }
+
+    // extract lowercase words without punctuation and add to selectedWords
+    const selectedWords = new Set();
+    [...blankIndices].forEach(i => {
+        const word = allWords[i];
+        const match = word.match(punctuationRegex);
+        const clean = (match ? match[1] : word).toLowerCase();
+        selectedWords.add(clean);
+    });
+
+    // mark all occurrences of selected words as blanks
+    missingWords = [];
+    allWords.forEach(word => {
+        const match = word.match(punctuationRegex);
+        const clean = (match ? match[1] : word).toLowerCase();
+        if (selectedWords.has(clean)) {
+            missingWords.push(clean);
+        }
+    });
 
 	// Build a list of incorrect distractors
-	const uniqueWords = [...new Set(allWords.map(w => w.replace(/[.,!?]/g, "")))];
-	distractingWords = uniqueWords
-		.filter(word => !missingWords.includes(word))
+	const uniqueWords = [...new Set(allWords.map(w => w.replace(/[.,!?]/g, "").toLowerCase()))];
+    const normalizedMissingSet = new Set(missingWords);
+    distractingWords = uniqueWords
+		.filter(word => !normalizedMissingSet.has(word))
 		.sort(() => Math.random() - 0.5)
 		.slice(0, 3);
 
 	termText.textContent = term;
+	buildDefinition();
+	buildWordBank();
 
+	tryAgainButton.classList.add("d-none");
+	nextTermButton.classList.add("d-none");
+}
+
+	termText.textContent = term;
 	buildDefinition();
 	buildWordBank();
 
@@ -65,7 +135,7 @@ function buildDefinition() {
   
         // separate the word from its punctuation ("description!!" --> "description" + "!!")
         const match = fullWord.match(/^(.+?)([.,!?]+)?$/);
-        const plainWord = match[1];
+        const plainWord = (match[1] || "").toLowerCase();
 
         // if not punctuation, use ""
         const punctuation = match[2] || "";
@@ -94,16 +164,31 @@ function buildDefinition() {
 }
 
 function buildWordBank() {
-    // merge both arrays of missing words and distracting words and shuffle them
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    //const wordOptions = [...missingWords, ...distractingWords].sort(() => Math.random() - 0.5);
-    const wordOptions = missingWords.concat(distractingWords).sort(() => Math.random() - 0.5);
-
     // clear previous word bank options
     wordBank.innerHTML = "";
 
+    // combine both correct and incorrect words
+    const allOptions = [...missingWords, ...distractingWords];
+    
+    // count how many times each word should appear
+    const wordCount = {};
+    allOptions.forEach(word => {
+        wordCount[word] = (wordCount[word] || 0) + 1;
+        /*
+        EX: allOptions = ['thing', 'thing', 'the']
+        wordCount['thing'] = (undefined || 0) + 1 => 1
+        wordCount['thing'] = (1 || 0) + 1 => 2
+        wordCount['the'] = (undefined || 0) + 1 => 1
+        */
+    });
+
+    // create array with correct frequency of each word
+    const wordOptions = Object.entries(wordCount) // EX: turns { thing: 2, the: 1 } into [ ['thing', 2], ['the', 1] ]
+        .flatMap(([word, count]) => Array(count).fill(word)) // flatMap: [ ['thing', 'thing'], ['the'] ] -->  ['thing', 'thing', 'the']
+        .sort(() => Math.random() - 0.5);
+
+    // create draggable button for each word
     wordOptions.forEach(word => {
-        // create draggable button for each word
         const wordButton = document.createElement("div");
         wordButton.textContent = word;
         wordButton.className = "word-bank-option";
@@ -184,7 +269,7 @@ submitButton.addEventListener("click", () => {
         const userAnswer = blank.getAttribute("data-user");
         const blankWord = blank.querySelector(".blank-word");
   
-        if (userAnswer === correctAnswer) {
+        if (userAnswer?.toLocaleLowerCase() === correctAnswer?.toLocaleLowerCase()) {
             blankWord.classList.add("correct");
       } else {
         blankWord.classList.add("incorrect");
@@ -196,10 +281,7 @@ submitButton.addEventListener("click", () => {
   });
 
 tryAgainButton.addEventListener("click", () => {
-    buildDefinition();
-    buildWordBank();
-    tryAgainButton.classList.add("d-none");
-    nextTermButton.classList.add("d-none");
+    loadFlashcard();
 });
 
 nextTermButton.addEventListener("click", () => {
