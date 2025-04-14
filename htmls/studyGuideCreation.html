@@ -46,7 +46,7 @@
             document.getElementById("clear-notes-button").addEventListener("click", clearStudyInput);
         });
 
-        fetch('components/navbar.html')
+        fetch('/components/navbar.html')
           .then(response => response.text())
           .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;

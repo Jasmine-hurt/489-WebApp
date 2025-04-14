@@ -36,7 +36,7 @@
     </div>
 
     <script>
-            fetch('components/authform.html')
+            fetch('/components/authform.html')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('signup-form-placeholder').innerHTML = data;
