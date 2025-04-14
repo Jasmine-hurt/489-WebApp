@@ -36,7 +36,11 @@ router.get('/create', (req, res) => {
     }
 });
 
+router.use(express.urlencoded({ extended: true }));
+
 router.post('/create', async (req, res) => {
+    console.log("REQ BODY:", req.body);
+
 	const { title, content } = req.body;
 	const userID = req.session.user?.id;
   
