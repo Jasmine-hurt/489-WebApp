@@ -26,6 +26,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        // default value of isAdmin field is set to false when a new user is created
+        defaultValue: false
+      }
     },
     {
       sequelize,

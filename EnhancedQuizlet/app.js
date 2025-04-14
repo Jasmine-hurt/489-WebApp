@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { sequelize, Flashcard } = require('./db');
+const { sequelize, Flashcard, User } = require('./db');
 require('./models/User');
 require('./models/Deck');
 require('./models/Flashcard');
@@ -13,11 +13,13 @@ var authRouter = require('./routes/auth');
 const decksRouter = require('./routes/decks');
 const flashcardsRouter = require('./routes/flashcards');
 const gamesRouter = require('./routes/games');
+const adminRouter = require('./routes/admin');
 
 var app = express();
 
 const session = require('express-session');
 const flash = require('connect-flash');
+const bcrypt = require('bcrypt');
 
 app.use(session({
   secret: 'secret_session_key',
@@ -30,12 +32,14 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success');
   res.locals.error_msg = req.flash('error');
+  res.locals.isAdmin = req.session.user?.isAdmin || false;
   res.locals.session = req.session;
   next();
 });
 
 app.use('/decks', decksRouter);
 app.use('/flashcards', flashcardsRouter);
+app.use('/admin', adminRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -68,9 +72,19 @@ app.use(function(err, req, res, next) {
 });
 
 // force clears the database upon starting, remove it if needed
-sequelize.sync(/*{ force: true }*/).then(async ()=> {
+sequelize.sync({ force: true }).then(async ()=> {
   console.log("Sequelize Sync Completed...")
   
+  // hash admin password
+  const hashedPassword = await bcrypt.hash("admin", 10);
+
+  await User.create({
+    name: "Admin",
+    email: "admin@wsu.edu",
+    password: hashedPassword,
+    isAdmin: true
+  });
+
   //const { User, Deck, Flashcard } = require('./db');
 });
 

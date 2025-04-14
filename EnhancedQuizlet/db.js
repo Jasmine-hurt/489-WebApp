@@ -17,10 +17,10 @@ const Deck = defineDeck(sequelize);
 const Flashcard = defineFlashcard(sequelize);
 
 // relationships
-User.hasMany(Deck, { foreignKey: 'userID' });
+User.hasMany(Deck, { foreignKey: 'userID', onDelete: 'CASCADE' });
 Deck.belongsTo(User, { foreignKey: 'userID' });
 
-Deck.hasMany(Flashcard, { foreignKey: 'deckID' });
+Deck.hasMany(Flashcard, { foreignKey: 'deckID', onDelete: 'CASCADE' });
 Flashcard.belongsTo(Deck, { foreignKey: 'deckID' });
 
 module.exports = {

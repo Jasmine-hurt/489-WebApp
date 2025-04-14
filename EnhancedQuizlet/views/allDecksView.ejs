@@ -14,7 +14,7 @@
 
     <!-- Deck Cards -->
     <div class="container mt-4">
-        <h2 class="text-center mb-4">All Decks View</h2>
+        <h2 class="text-center">All Decks View</h2>
         <div class="row px-3 my-3">
             <% if (decks.length) { %>
                 <% decks.forEach(deck => { %>
@@ -30,7 +30,7 @@
                     </div>
                 <% }) %>
             <% } else { %>
-                <p>You have no flashcard decks.</p>
+                <p class="text-center">You have no flashcard decks.</p>
             <% } %>
         </div>
     </div>

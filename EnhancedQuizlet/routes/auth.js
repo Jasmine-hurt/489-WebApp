@@ -37,7 +37,8 @@ router.post('/login', async (req, res) => {
     req.session.user = {
       id: user.userID,
       name: user.name,
-      email: user.email
+      email: user.email,
+      isAdmin: user.isAdmin
     };
 
     req.flash('success', 'Login successful!');
