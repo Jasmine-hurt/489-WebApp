@@ -1,0 +1,82 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the card */
+  .term {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+  
+  .card-body {
+    text-align: left;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    width: 100%;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #d6d6d6;
+    cursor: not-allowed;
+  }
+  
+  .d-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .mt-2 {
+    margin-top: 10px;
+  }
+  
+  .text-success {
+    color: green;
+  }
+  
+  .text-danger {
+    color: red;
+  }
+  
+  .d-none {
+    display: none;
+  }
+  
