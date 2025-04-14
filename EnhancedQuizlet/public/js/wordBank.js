@@ -24,9 +24,17 @@ function loadFlashcard() {
 	term = currentFlashcard.term;
 	fullDefinition = currentFlashcard.description;
 
-	// Choose every 3rd word as missing
-	const allWords = fullDefinition.split(" ");
-	missingWords = allWords.filter((_, i) => i % 3 === 0);
+    const allWords = fullDefinition.split(" ");
+
+    // random between 1 and 5
+    const interval = Math.floor(Math.random() * 4) + 2
+
+    //missingWords = allWords.filter((_, i) => i % interval === 0);
+    missingWords = allWords.filter((_, i) => i % interval === 0).map(word => {
+        const match = word.match(/^(.+?)([.,!?]+)?$/);
+        return match ? match[1] : word;
+    });
+
 
 	// Build a list of incorrect distractors
 	const uniqueWords = [...new Set(allWords.map(w => w.replace(/[.,!?]/g, "")))];
@@ -88,7 +96,8 @@ function buildDefinition() {
 function buildWordBank() {
     // merge both arrays of missing words and distracting words and shuffle them
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    const wordOptions = [...missingWords, ...distractingWords].sort(() => Math.random() - 0.5);
+    //const wordOptions = [...missingWords, ...distractingWords].sort(() => Math.random() - 0.5);
+    const wordOptions = missingWords.concat(distractingWords).sort(() => Math.random() - 0.5);
 
     // clear previous word bank options
     wordBank.innerHTML = "";

@@ -74,17 +74,21 @@ app.use(function(err, req, res, next) {
 });
 
 // force clears the database upon starting, remove it if needed
-sequelize.sync({ force: true }).then(async ()=> {
+sequelize.sync(/*{ force: true }*/).then(async ()=> {
   console.log("Sequelize Sync Completed...")
   
   // hash admin password
   const hashedPassword = await bcrypt.hash("admin", 10);
 
-  await User.create({
-    name: "Admin",
-    email: "admin@wsu.edu",
-    password: hashedPassword,
-    isAdmin: true
+  await User.findOrCreate({
+    where: {
+      email: "admin@wsu.edu"
+    },
+    defaults: {
+      name: "Admin",
+      password: hashedPassword,
+      isAdmin: true
+    }
   });
 
   //const { User, Deck, Flashcard } = require('./db');
