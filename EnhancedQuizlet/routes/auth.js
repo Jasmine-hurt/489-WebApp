@@ -16,7 +16,8 @@ router.get('/login', (req, res) => {
 
 // for logging in, checks if user is found with email inputted and correct passwords
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const email = req.body.email.toLowerCase();
 
   try {
     const user = await User.findOne({ where: { email } });
@@ -58,7 +59,8 @@ router.get('/signup', (req, res) => {
 
 // for creating a new account
 router.post('/signup', async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { name, password, confirmPassword } = req.body;
+  const email = req.body.email.toLowerCase();
 
   // password validation
   if (password !== confirmPassword) {
