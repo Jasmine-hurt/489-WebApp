@@ -62,6 +62,7 @@ router.post('/create', async (req, res) => {
 
 router.get('/:guideID', async (req, res) => {
     try {
+        const userID = req.session.user?.id;
         const guide = await StudyGuide.findByPk(req.params.guideID);
         
         if (!guide) {
