@@ -112,5 +112,24 @@ router.post('/:deckID/delete', async (req, res) => {
         res.status(500).send("Failed delete deck.");
     }
 });
+
+router.post('/:deckID/edit', async (req, res) => {
+    try {
+        const deckID = req.params.deckID;
+        const { title, description } = req.body;
+
+        const deck = await Deck.findByPk(deckID);
+        if (deck) {
+            deck.title = title;
+            deck.description = description;
+            await deck.save();
+        }
+
+        res.redirect(`/decks/${deckID}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to update deck.");
+    }
+});
   
 module.exports = router;
