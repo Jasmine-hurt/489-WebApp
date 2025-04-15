@@ -31,6 +31,14 @@ module.exports = (sequelize) => {
         allowNull: false,
         // default value of isAdmin field is set to false when a new user is created
         defaultValue: false
+      },
+      resetToken: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      resetTokenExpires: {
+        type: DataTypes.DATE,
+        allowNull: true,
       }
     },
     {

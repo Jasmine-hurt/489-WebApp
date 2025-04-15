@@ -7,6 +7,7 @@ const { sequelize, Flashcard, User } = require('./db');
 require('./models/User');
 require('./models/Deck');
 require('./models/Flashcard');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
