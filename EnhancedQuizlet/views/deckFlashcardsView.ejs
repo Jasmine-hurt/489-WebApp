@@ -60,85 +60,82 @@
     <!-- Navigation Bar -->
     <%- include('components/navbar') %>
 
-    <div class="container my-5">
-      <h2 class="text-center mb-4">Deck View</h2>
-      <h4 class="text-center mb-4">Play a Game with This Deck</h4>
-      <div class="row justify-content-center mb-5">
-
-        <!-- Tap to Reveal -->
-        <div class="col-md-3 mb-3">
-          <a href="/games/tapToReveal/play/<%= deckID %>" class="text-decoration-none">
-            <div class="card shadow rounded-3 border-0 game-card">
-              <div class="card-body text-center">
-                <h5 class="card-title"><i class="bi bi-eye-fill mx-2"></i>Tap to Reveal</h5>
+    <div class="container mt-5 position-relative">
+      <div class="position-absolute top-0 end-0 mt-2 me-2">
+        <form action="/decks/<%= deckID %>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash-fill me-1"></i>Delete Deck
+          </button>
+        </form>
+      </div>
+      
+      <div class="row">
+        <!-- Left Column: Games -->
+        <div class="col-md-3">
+          <h4 class="mb-3 text-center">Play a Game</h4>
+          <div class="d-flex flex-column gap-3">
+            <a href="/games/tapToReveal/play/<%= deckID %>" class="text-decoration-none">
+              <div class="card shadow rounded-3 border-0 game-card">
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><i class="bi bi-eye-fill me-2"></i>Tap to Reveal</h5>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+            <a href="/games/wordBank/play/<%= deckID %>" class="text-decoration-none">
+              <div class="card shadow rounded-3 border-0 game-card">
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><i class="bi bi-card-list me-2"></i>Word Bank</h5>
+                </div>
+              </div>
+            </a>
+            <a href="/games/fillInTheBlanks/play/<%= deckID %>" class="text-decoration-none">
+              <div class="card shadow rounded-3 border-0 game-card">
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><i class="bi bi-pencil-square me-2"></i>Fill in the Blanks</h5>
+                </div>
+              </div>
+            </a>
+            <a href="/games/passageMemory/play/<%= deckID %>" class="text-decoration-none">
+              <div class="card shadow rounded-3 border-0 game-card">
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><i class="bi bi-journal-text me-2"></i>Passage Memory</h5>
+                </div>
+              </div>
+            </a>
+            <a href="/games/matching/play/<%= deckID %>" class="text-decoration-none">
+              <div class="card shadow rounded-3 border-0 game-card">
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><i class="bi bi-journal-text me-2"></i>Matching Game</h5>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
-
-        <!-- Word Bank -->
-        <div class="col-md-3 mb-3">
-          <a href="/games/wordBank/play/<%= deckID %>" class="text-decoration-none">
-            <div class="card shadow rounded-3 border-0 game-card">
-              <div class="card-body text-center">
-                <h5 class="card-title"><i class="bi bi-card-list mx-2"></i>Word Bank</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Fill in the Blanks -->
-        <div class="col-md-3 mb-3">
-          <a href="/games/fillInTheBlanks/play/<%= deckID %>" class="text-decoration-none">
-            <div class="card shadow rounded-3 border-0 game-card">
-              <div class="card-body text-center">
-                <h5 class="card-title"><i class="bi bi-pencil-square mx-2"></i>Fill in the Blanks</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Fill in the Blanks -->
-        <div class="col-md-3 mb-3">
-          <a href="/games/passageMemory/play/<%= deckID %>" class="text-decoration-none">
-            <div class="card shadow rounded-3 border-0 game-card">
-              <div class="card-body text-center">
-                <h5 class="card-title"><i class="bi bi-journal-text mx-2"></i>Passage Memory</h5>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Matching -->
-        <div class="col-md-3 mb-3">
-          <a href="/games/matching/play/<%= deckID %>" class="text-decoration-none">
-            <div class="card shadow rounded-3 border-0 game-card">
-              <div class="card-body text-center">
-                <h5 class="card-title"><i class="bi bi-journal-text mx-2"></i>Matching Game</h5>
-              </div>
-            </div>
-          </a>
+      
+        <!-- Right Column: Flashcards -->
+        <div class="col-md-9">
+          <h2 class="text-center mb-4">Deck View</h2>
+          <div class="row gy-4" id="deck-container">
+            <% if (flashcards.length) { %>
+              <% flashcards.forEach((card, index) => { %>
+                <div class="col-md-4">
+                  <a href="/flashcards/<%= deckID %>/<%= index%>">
+                    <div class="flashcard">
+                      <div class="flashcard-inner">
+                          <div class="flashcard-front"><%= card.term %></div>
+                          <div class="flashcard-back"><%= card.description %></div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              <% }) %>
+            <% } else { %>
+                <p>This deck has no flashcards.</p>
+            <% } %>
+          </div>
         </div>
       </div>
       
-      <div class="row gy-4" id="deck-container">
-        <% if (flashcards.length) { %>
-          <% flashcards.forEach((card, index) => { %>
-            <div class="col-md-4 md-4">
-              <a href="/flashcards/<%= deckID %>/<%= index%>">
-                <div class="flashcard">
-                  <div class="flashcard-inner">
-                      <div class="flashcard-front"><%= card.term %></div>
-                      <div class="flashcard-back"><%= card.description %></div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          <% }) %>
-        <% } else { %>
-            <p>This deck has no flashcards.</p>
-        <% } %>
-      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
