@@ -39,7 +39,6 @@ router.get('/create', (req, res) => {
 router.use(express.urlencoded({ extended: true }));
 
 router.post('/create', async (req, res) => {
-    console.log("REQ BODY:", req.body);
 
 	const { title, content } = req.body;
 	const userID = req.session.user?.id;
@@ -77,6 +76,94 @@ router.get('/:guideID', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Failed to load study guide.");
+    }
+});
+
+router.post('/delete/:guideID', async (req, res) => {
+    const userID = req.session.user?.id;
+    const guideID = req.params.guideID;
+
+    if (!userID) {
+        req.flash('error', 'Please log in to delete a study guide.');
+        return res.redirect('/auth/login');
+    }
+
+    try {
+        const guide = await StudyGuide.findByPk(guideID);
+
+        if (!guide) {
+            req.flash('error', 'Study guide not found.');
+            return res.redirect('/studyGuides');
+        }
+
+        if (guide.userID !== userID) {
+            req.flash('error', 'You are not authorized to delete this study guide.');
+            return res.redirect('/studyGuides');
+        }
+
+        await guide.destroy();
+        req.flash('success', 'Study guide deleted successfully.');
+        res.redirect('/studyGuides');
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Failed to delete study guide.');
+        res.redirect('/studyGuides');
+    }
+});
+
+router.post('/updateTitle/:guideID', async (req, res) => {
+    const userID = req.session.user?.id;
+    const guideID = req.params.guideID;
+    const { title } = req.body;
+
+    if (!userID) {
+        req.flash('error', 'Please log in to update your study guide.');
+        return res.redirect('/auth/login');
+    }
+
+    try {
+        const guide = await StudyGuide.findByPk(guideID);
+
+        if (!guide || guide.userID !== userID) {
+            req.flash('error', 'You are not authorized to edit this study guide.');
+            return res.redirect('/studyGuides');
+        }
+
+        await guide.update({ title });
+        req.flash('success', 'Title updated successfully.');
+        res.redirect(`/studyGuides/${guideID}`);
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Failed to update title.');
+        res.redirect(`/studyGuides/${guideID}`);
+    }
+});
+
+router.post('/updateContent/:guideID', async (req, res) => {
+    const userID = req.session.user?.id;
+    const guideID = req.params.guideID;
+    const { content } = req.body;
+
+    if (!userID) {
+        req.flash('error', 'Please log in to update your study guide.');
+        return res.redirect('/auth/login');
+    }
+
+    try {
+        const guide = await StudyGuide.findByPk(guideID);
+
+        if (!guide || guide.userID !== userID) {
+            req.flash('error', 'You are not authorized to edit this study guide.');
+            return res.redirect('/studyGuides');
+        }
+
+        await guide.update({ content });
+        req.flash('success', 'Outline updated successfully.');
+        res.redirect(`/studyGuides/${guideID}`);
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Failed to update outline.');
+        res.redirect(`/studyGuides/${guideID}`);
     }
 });
 
