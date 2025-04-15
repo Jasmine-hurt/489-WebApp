@@ -113,6 +113,28 @@ router.post('/:deckID/delete', async (req, res) => {
     }
 });
 
+router.post('/:deckID/addCard', async (req, res) => {
+    try {
+        const deckID = req.params.deckID;
+        const { term, definition } = req.body;
+        deck = await Deck.findByPk(deckID);
+        if (deck) {
+            await Flashcard.create({
+                term: term,
+                description: definition,
+                deckID: deckID
+              });
+        }
+        console.log(term);
+        console.log(definition);
+        
+        res.redirect(`/decks/${deckID}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed add flashcard.");
+    }
+});
+
 router.post('/:deckID/edit', async (req, res) => {
     try {
         const deckID = req.params.deckID;
