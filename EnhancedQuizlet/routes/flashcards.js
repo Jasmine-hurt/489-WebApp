@@ -66,5 +66,28 @@ router.post('/:deckID/:flashcardIndex/delete', async (req, res) => {
     }
 });
   
+router.post('/:deckID/:flashcardIndex/edit', async (req, res) => {
+    const { deckID, flashcardIndex } = req.params;
+    const { term, description } = req.body;
+  
+    try {
+      const deck = await Deck.findByPk(deckID);
+      if (!deck) return res.status(404).send("Deck not found");
+  
+      const flashcards = await Flashcard.findAll({ where: { deckID } });
+  
+      if (flashcardIndex < 0 || flashcardIndex >= flashcards.length) return res.status(400).send("Invalid flashcard index");
+  
+      const card = flashcards[flashcardIndex];
+      card.term = term;
+      card.description = description;
+      await card.save();
+  
+      res.redirect(`/flashcards/${deckID}/${flashcardIndex}`);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error editing flashcard");
+    }
+  });
 
 module.exports = router;
