@@ -59,7 +59,7 @@ router.post('/:deckID/:flashcardIndex/delete', async (req, res) => {
       }
   
       await flashcard.destroy();
-      res.render('deckFlashcardsView', { deckID: deck.deckID, flashcards: deck.Flashcards });
+      res.redirect(`/decks/${deckID}`);
     } catch (err) {
       console.error(err);
       res.status(500).send("Error retrieving flashcard.");
