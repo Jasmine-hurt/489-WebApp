@@ -87,7 +87,7 @@ router.get('/:deckID', async (req, res) => {
         }
 
         if (deck.userID == userID) {
-            res.render('deckFlashcardsView', { deckID: deck.deckID, flashcards: deck.Flashcards });
+            res.render('deckFlashcardsView', { deck: deck, flashcards: deck.Flashcards });
         } else {
             return res.status(404).send('Not authorized to view this deck');
         }
