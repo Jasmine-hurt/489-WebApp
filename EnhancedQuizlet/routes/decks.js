@@ -97,4 +97,20 @@ router.get('/:deckID', async (req, res) => {
     }
 });
 
+router.post('/:deckID/delete', async (req, res) => {
+    try {
+        const deckID = req.params.deckID;
+        deck = await Deck.findByPk(deckID);
+        if (deck) {
+            await deck.destroy();
+            await Flashcard.destroy({ where: { deckID } });
+        }
+        
+        res.redirect('/decks');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed delete deck.");
+    }
+});
+  
 module.exports = router;

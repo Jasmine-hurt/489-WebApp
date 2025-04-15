@@ -39,4 +39,32 @@ router.get('/:deckID/:flashcardIndex', async (req, res) =>{
     }
 });
 
+router.post('/:deckID/:flashcardIndex/delete', async (req, res) => {
+    try {
+        const deck = await Deck.findByPk(req.params.deckID, {
+            include: [Flashcard]
+        });
+        const { deckID, flashcardIndex } = req.params;
+  
+      // Get all flashcards for this deck, ordered by creation or ID
+      const flashcards = await Flashcard.findAll({
+        where: { deckID },
+        order: [['flashcardID', 'ASC']]
+      });
+
+      const flashcard = flashcards[flashcardIndex];
+  
+      if (!flashcard) {
+        return res.status(404).send('Flashcard not found.');
+      }
+  
+      await flashcard.destroy();
+      res.render('deckFlashcardsView', { deckID: deck.deckID, flashcards: deck.Flashcards });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error retrieving flashcard.");
+    }
+});
+  
+
 module.exports = router;

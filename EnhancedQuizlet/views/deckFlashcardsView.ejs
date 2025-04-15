@@ -62,9 +62,9 @@
 
     <div class="container mt-5 position-relative">
       <div class="position-absolute top-0 end-0 mt-2 me-2">
-        <form action="/decks/<%= deckID %>?_method=DELETE" method="POST">
+        <form action="/decks/<%= deckID %>/delete" method="POST">
           <button type="submit" class="btn btn-danger">
-            <i class="bi bi-trash-fill me-1"></i>Delete Flashcard
+            <i class="bi bi-trash-fill me-1"></i>Delete Deck
           </button>
         </form>
       </div>
