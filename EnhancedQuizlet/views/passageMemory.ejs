@@ -16,16 +16,18 @@
             <h1 id="title">Passage Memory</h1>
         </div>
 
+        <!-- Flashcards rendering loop -->
         <% flashcards.forEach((flashcard, index) => { %>
             <div id="term<%= index + 1 %>" class="card mb-3 term <%= index !== 0 ? 'd-none' : '' %>">
                 <div class="card-body">
-                    <p id="description<%= index + 1 %>"><%= flashcard.description %></p>
-                    <input type="text" id="input<%= index + 1 %>" class="form-control" placeholder="Type the term">
+                    <p id="term-text<%= index + 1 %>"><%= flashcard.term %></p> <!-- Show the term here -->
+                    <input type="text" id="input<%= index + 1 %>" class="form-control" placeholder="Write the definition">
                     <div id="message<%= index + 1 %>" class="mt-2 d-none"></div>
                 </div>
             </div>
         <% }) %>
 
+        <!-- Buttons to navigate the flashcards -->
         <div class="d-flex justify-content-between mt-4">
             <button id="previous" class="btn btn-primary" disabled>Previous</button>
             <button id="submit" class="btn btn-success">Submit</button>
@@ -46,7 +48,7 @@
         const previousButton = document.getElementById('previous');
         const nextButton = document.getElementById('next');
         const submitButton = document.getElementById('submit');
-        const returnToDeckButton = document.getElementById('return-to-decks');
+        const returnToDeckButton = document.getElementById('return-to-deck');
 
         function updateFlashcard() {
             flashcards.forEach((_, index) => {
@@ -56,7 +58,7 @@
 
             previousButton.disabled = currentIndex === 0;
             nextButton.disabled = currentIndex === totalFlashcards - 1;
-            
+
             // Show the return-to-deck button after the last flashcard
             if (currentIndex === totalFlashcards - 1) {
                 returnToDeckButton.classList.remove('d-none');
@@ -69,7 +71,7 @@
         submitButton.addEventListener('click', () => {
             const inputField = document.getElementById(`input${currentIndex + 1}`);
             const messageDiv = document.getElementById(`message${currentIndex + 1}`);
-            const correctAnswer = flashcards[currentIndex].term.toLowerCase();
+            const correctAnswer = flashcards[currentIndex].description.toLowerCase();
 
             if (inputField.value.trim().toLowerCase() === correctAnswer) {
                 messageDiv.textContent = 'Correct!';
@@ -82,15 +84,17 @@
             messageDiv.classList.remove('d-none');
         });
 
+        // Handle previous button click event
         previousButton.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateFlashcard();
-            const inputField = document.getElementById(`input${currentIndex + 1}`);
-            inputField.value = ''; 
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateFlashcard();
+                const inputField = document.getElementById(`input${currentIndex + 1}`);
+                inputField.value = ''; 
             }
         });
 
+        // Handle next button click event
         nextButton.addEventListener('click', () => {
             if (currentIndex < totalFlashcards - 1) {
                 currentIndex++;
@@ -98,8 +102,9 @@
             }
         });
 
+        // Handle return to deck button click event
         returnToDeckButton.addEventListener('click', () => {
-            window.location.href = "/decks"; 
+            window.location.href = "/decks"; // Replace with your actual deck view URL
         });
 
         updateFlashcard();
