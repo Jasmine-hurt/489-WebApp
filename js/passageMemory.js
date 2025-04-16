@@ -35,9 +35,9 @@ function handleSubmit(inputId, descriptionId, correctDescription, messageId) {
   }
 }
 
-checkInput('input1', 'description1', 'HTML stands for HyperText Markup Language. It is the standard language for creating webpages. It uses a system of tags to structure content on the web.', 'message1');
-checkInput('input2', 'description2', 'CSS stands for Cascading Style Sheets. It is used to style and format the layout of webpages. It controls how HTML elements are displayed visually on the screen.', 'message2');
-checkInput('input3', 'description3', 'JavaScript is a programming language that allows developers to create interactive effects within web browsers. It is essential for dynamic content on webpages.', 'message3');
+checkInput('input1', 'description1', 'A markup language for creating web pages', 'message1');
+checkInput('input2', 'description2', 'A style sheet language used for describing the look of a document', 'message2');
+checkInput('input3', 'description3', 'A programming language used to create dynamic content on websites', 'message3');
 
 
 showTerm(currentTerm);
