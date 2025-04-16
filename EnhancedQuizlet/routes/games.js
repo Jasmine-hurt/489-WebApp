@@ -73,11 +73,11 @@ router.get('/matching/play/:deckID', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error loading Word Bank game.");
+    res.status(500).send("Error loading Matching game.");
   }
 });
 
-router.get('/memoryPassage/play/:deckID', async (req, res) => {
+router.get('/passageMemory/play/:deckID', async (req, res) => {
   const userID = req.session.user?.id;
   const deckID = req.params.deckID;
 
@@ -89,13 +89,35 @@ router.get('/memoryPassage/play/:deckID', async (req, res) => {
     if (!deck) return res.status(404).send("Deck not found.");
     if (deck.userID !== userID) return res.status(403).send("Unauthorized.");
 
-    res.render('wordBank', {
+    res.render('passageMemory', {
       flashcards: deck.Flashcards,
       deckID: deck.deckID
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error loading Word Bank game.");
+    res.status(500).send("Error loading passage memory game.");
+  }
+});
+
+router.get('/termMemory/play/:deckID', async (req, res) => {
+  const userID = req.session.user?.id;
+  const deckID = req.params.deckID;
+
+  try {
+    const deck = await Deck.findByPk(deckID, {
+      include: [Flashcard]
+    });
+
+    if (!deck) return res.status(404).send("Deck not found.");
+    if (deck.userID !== userID) return res.status(403).send("Unauthorized.");
+
+    res.render('termMemory', {
+      flashcards: deck.Flashcards,
+      deckID: deck.deckID
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error loading term memory game.");
   }
 });
 
